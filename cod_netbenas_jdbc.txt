@@ -1,0 +1,22 @@
+package proiect_bd_netbeans;
+import java.sql.*;
+/**
+ *
+ * @author ioio
+ */
+public class jdbc_connect {
+    public static void main(String[] args) {
+            try {
+            Connection connection  = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd","root","qwerty");
+            
+            Statement statement = connection.createStatement();
+            
+            ResultSet resultSet =statement.executeQuery("select * from users");
+            
+            while (resultSet.next()) {
+                    System.out.println(resultSet.getString("id"));
+        }
+        }catch (SQLException e) {
+        }
+}
+}

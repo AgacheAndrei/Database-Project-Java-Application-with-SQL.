@@ -1,0 +1,197 @@
+CREATE TABLE `proiect_bd`.`users` (
+  `id` INT NOT NULL,
+  `nume` VARCHAR(45) NOT NULL,
+  `rol` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `bd`.`users` 
+ADD COLUMN `password` VARCHAR(45) NOT NULL AFTER `rol`;
+
+CREATE TABLE `bd`.`istoric` (
+  `id_eveniment` INT NOT NULL,
+  `user` VARCHAR(45) NOT NULL,
+  `eveniment` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_eveniment`));
+ALTER TABLE `bd`.`istoric` 
+CHANGE COLUMN `id_eveniment` `id_eveniment` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `bd`.`istoric` 
+ADD COLUMN `date` DATE AFTER `eveniment`;
+
+CREATE TABLE `bd`.`bursieri` (
+  `codbur` INT NOT NULL,
+  `nr_matricol` INT NOT NULL,
+  INDEX `codbur_idx` (`codbur` ASC) VISIBLE,
+  INDEX `nr_matricol_idx` (`nr_matricol` ASC) VISIBLE,
+  CONSTRAINT `codbur`
+    FOREIGN KEY (`codbur`)
+    REFERENCES `bd`.`tip_bursa` (`codbur`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `nr_matricol`
+    FOREIGN KEY (`nr_matricol`)
+    REFERENCES `bd`.`elev` (`nr_matricol`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+ALTER TABLE `bd`.`bursieri` 
+ADD UNIQUE INDEX `nr_matricol_UNIQUE` (`nr_matricol` ASC) VISIBLE;
+;
+
+CREATE TABLE `bd`.`tip_bursa` (
+  `codbur` INT NOT NULL,
+  `acte_br` VARCHAR(45) NOT NULL,
+  `medie` DECIMAL(5,2) NOT NULL,
+  `valoare` INT NOT NULL,
+  `nume` VARCHAR(45) NOT NULL,
+  `durata_luni` INT NOT NULL,
+  PRIMARY KEY (`codbur`));
+
+ALTER TABLE `bd`.`tip_bursa` 
+ADD COLUMN `durata_luni` INT NOT NULL AFTER `nume`;
+
+CREATE TABLE `bd`.`elev` (
+  `nr_matricol` INT NOT NULL,
+  `CNP` VARCHAR(13) NOT NULL,
+  `nume` VARCHAR(45) NOT NULL,
+  `prenume` VARCHAR(45) NOT NULL,
+  `nr_telefon` VARCHAR(10) NULL,
+  `adresa` VARCHAR(45) NOT NULL,
+  `medie` DECIMAL(5,2) NOT NULL,
+  `acte_adi` VARCHAR(100) NOT NULL,
+  `codclasa` INT NOT NULL,
+  PRIMARY KEY (`nr_matricol`),
+  INDEX `codclasa_idx` (`codclasa` ASC) VISIBLE,
+  CONSTRAINT `codclasa`
+    FOREIGN KEY (`codclasa`)
+    REFERENCES `bd`.`clasa` (`codclasa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `bd`.`clasa` (
+  `codclasa` INT NOT NULL,
+  `an` VARCHAR(4) NOT NULL,
+  `codsp` int NOT NULL,
+  PRIMARY KEY (`codclasa`),
+  INDEX `codsp_idx` (`codsp` ASC) VISIBLE,
+  CONSTRAINT `codsp`
+    FOREIGN KEY (`codsp`)
+    REFERENCES `bd`.`specializare` (`codsp`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `bd`.`clasa` (
+  `codclasa` INT NOT NULL,
+  `an` VARCHAR(4) NOT NULL,
+  `codsp` int NOT NULL,
+  PRIMARY KEY (`codclasa`),
+  INDEX `codsp_idx` (`codsp` ASC) VISIBLE,
+  CONSTRAINT `codsp`
+    FOREIGN KEY (`codsp`)
+    REFERENCES `bd`.`specializare` (`codsp`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `bd`.`specializare` (
+  `codsp` INT NOT NULL,
+  `nume_sp` VARCHAR(45) NOT NULL,
+  `duarata` INT NOT NULL,
+  `codpr` int NOT NULL,
+  PRIMARY KEY (`codclasa`),
+  INDEX `codpr_idx` (`codpr` ASC) VISIBLE,
+  CONSTRAINT `codpr`
+    FOREIGN KEY (`codpr`)
+    REFERENCES `bd`.`profil` (`codpr`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `bd`.`profil` (
+  `codpr` INT NOT NULL,
+  `nume_profil` VARCHAR(45) NOT NULL,
+  );
+
+//TABELA ELEV
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1101', '5221214017732', 'Anton', 'Marius ', '0712244982', 'Str Grivitei nr 4 BlocP4 ap 3', '9.20', 'CI,CN,DIPOLIMP', '110');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1102', '5210417178026', 'Marcu', 'Ion', '0722344990 ', 'Str Maria nr 2 Blocl A2 ap 44', '9.56', 'CI,CN,FM', '110');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1103', '6210425178871', 'Paeaschiv', 'Elena', '0789223185', 'Str Henri nr 4 Bloc C4 ap 3', '9.88', 'CI,CN,FM', '110');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1104', '6210709175429', 'Neculai', 'Ana', '0988223445', 'Str Matei nr 9 Bloc W4 ap 32', '8.92', 'CI,CN', '110');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1105', '5210725177641', 'Pantele', 'Ronaldo', '0999222441', 'Str Alga nr 9 Bloc P4 ap 98', '6.77', 'CI,CN', '110');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1106', '5210725175216', 'Anela', 'Andrei', '0992345990', 'Str Alga nr 9 Bloc P4 ap 99', '9.69', 'CI,CN,FM', '120');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1107', '5210707179365', 'Akena', 'Ugal', '0998234559', 'Str Busuioc nr 3 Bloc L4 ap 8', '7.88', 'CI,CN', '120');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1108', '6210707177312', 'Porumb', 'Aneta', '0924882881', 'Str Busuioc nr 3 Bloc L4 ap 12', '5.66', 'CI,CN', '120');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1109', '6210707178250', 'Salin', 'Viorica', '0234889221', 'Str Busuioc nr 3 Bloc L4 ap 13', '8.99', 'CI,CN', '120');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1110', '6210715178121', 'Sandaleni', 'Ionela', '0742336778', 'Str Busuioc nr 3 Bloc L4 ap 19', '9.47', 'CI,CN', '120');
+
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1111', '5211008175323', 'Buhoino', 'Alex', '0721667223', 'Str Arbore nr 92 Bloc H2 ap 20', '9.88', 'CI,CN,FM', '130');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1112', '5211008175501', 'Agon', 'Mirandi', '0799652134', 'Str Arbore nr 92 Bloc H2 ap 21', '7.23', 'CI,CN', '130');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1113', '6211021176329', 'Geano', 'Antonia', '0766552551', 'Str Busuioc nr 3 Bloc L4 ap 17', '7.99', 'CI,CN', '130');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1114', '6211021177515', 'Vintilo', 'Pebela', '0789221331', 'Str Amaterasu nr 69 Bloc S4 ap 99', '6.66', 'CI,CN', '130');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1115', '6211023179911', 'Poseidon ', 'Angelina', '0799667553', 'Str Amaterasu nr 69 Bloc S4 ap 120', '7.77', 'CI,CN', '130');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1116', '6211216178467', 'Dinero', 'Anabela', '0788664321', 'Str Enel nr 33 Bloc L44 ap 122', '9.51', 'CI,CN,FM', '140');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1117', '5211216178094', 'Analog', 'Marius', '0788990220', 'Str Enel nr 4 Bloc L24 ap 56\n', '9.88', 'CI,CN,FM', '140');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1118', '5211216177991', 'Nistor', 'Abel', '0788221884', 'Str Busuioc nr 23 Bloc T4 ap 12\n', '7.99', 'CI,CN,AD', '140');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1119', '6211201178169', 'Anabel', 'Ana', '0755662662', 'Str Ancora nr 22 Bloc LI99 ap 76', '7.79', 'CI,CN', '140');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1120', '6211217178558', 'Ancora', 'Minodora', '0799233677', 'Str Ancora nr 323 Bloc PI ap 55\n', '9.30', 'CI,CN', '140');
+
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1121', '6011206178450', 'Lukoil', 'Lucia', '0722889221', 'Str Busuioc nr 3 Bloc L4 ap 19', '9.88', 'CI,CN,FM', '150');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1122', '6011215176564', 'Ionade', 'Erica', '0788990457', 'Str Busuioc nr 3 Bloc L4 ap 30', '9.00', 'CI,CN,ANAF', '150');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1123', '5011215175632', 'Palade', 'Nicu', '0754771889', 'Str Maraton nr 23 Bloc A22 ap 23', '9.20', 'CI,CN', '150');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1124', '5011215175173', 'Galato', 'Jean', '0755667885', 'Str Kula nr 3 Bloc L4 ap 12', '8.43', 'CI,CN', '150');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1125', '5011206177190', 'Olina', 'Matei', '0722887667', 'Str Martie  nr 6  Bloc M6 ap 66\n', '6.99', 'CI,CN', '150');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1126', '5011116178223', 'Anakin', 'Skywalker', '0799000990', 'Str Stea nr 99  Bloc DE6 ap 99\n', '9.89', 'CI,CN,FM', '160');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1127', '6011122177164', 'Anatolie', 'Patricia', '0755288990', 'Str Inima nr 3 Bloc L4 ap 12\n', '8.77', 'CI,CN,ACH', '160');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1128', '5011122175507', 'Popice', 'Alex', '0788661224', 'Str Bowling nr 9  Bloc P4 ap 44\n', '7.53', 'CI,CN', '160');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1129', '6010615178801', 'Sancez', 'Julia', '0788221442', 'Str Nasture nr 23 Bloc N4 ap 45\n', '6.88', 'CI,CN', '160');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1130', '6010615176330', 'Divin', 'Maria', '0725255255', 'Str Sfant nr 25 Bloc C6 ap 1\n', '9.00', 'CI,CN', '160');
+
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1131', '6011006176871', 'Mandora', 'Madalina', '0776221551', 'Str Cuza nr 5 Bloc L4 ap 28\n', '9.62', 'CI,CN,FM', '170');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1132', '5011018176918', 'Eremia', 'Tudor', '0777889001', 'Str Busuioc nr 3 Bloc L4 ap 12', '8.88', 'CI,CN,AF,DE', '170');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1133', '5011019175871', 'Arenda', 'Mitica', '0778221882', 'Str Bus nr 3 Bloc L4 ap 12\n', '8.89', 'CI,CN,AF,DE', '170');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1134', '6011019177893', 'Uite', 'Anais', '0766543213', 'Str Olimp nr 23 Bloc O4 ap 45\n', '9.24', 'CI,CN', '170');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1135', '6010510178580', 'Floare', 'Carmen', '0777666222', 'Str Ancora nr 3 Bloc L4 ap 12', '9.24', 'CI,CN', '170');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1136', '6010228177227', 'Vorca', 'Ina', '0772113221', 'Str Berei nr 1  Bloc 5L ap 66\n', '10.00', 'CI,CN,DIPOLIMP', '180');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1137', '5010217175514', 'Marca', 'Ion', '0776221666', 'Str Apa nr 3 Bloc L4 ap 12\n', '9.88', 'CI,CN,FM', '180');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1138', '6010223175641', 'Aka', 'Kalash', '0747756756', 'Str Arma nr 47 Bloc L30 ap 1\n', '9.77', 'CI,CN,FM', '180');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1139', '6010223177426', 'Durea', 'Maria', '0772277888', 'Str Busuioc nr 3 Bloc L4 ap 88\n', '5.00', 'CI,CN', '180');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1140', '5010815177856', 'Ducu', 'Beleaua', '0722772772', 'Str Mare Belea nr 69 Bloc B4 ap 67\n', '6.66', 'CI,CN', '180');
+
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1141', '6011222177803', 'Andrei', 'AnaMaria', '0722445667', 'Str Busuioc nr 3 Bloc L4 ap 12\n', '9.89', 'CI,CN,FM', '190');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1142', '6011223179359', 'Popa', 'Camelia', '0772667889', 'Str Anetei nr 3 Bloc P4 ap 12\n', '7.00', 'CI,CN,ANAF', '190');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1143', '5011223176626', 'Albertini', 'Nicolas', '0778998778', 'Str Alba nr 32 Bloc H4 ap 12\n', '6.82', 'CI,CN,ANAF', '190');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1144', '6011223175521', 'Iordan', 'Mara', '0772662664', 'Str Busuioc nr 3 Bloc M4 ap 12\n', '8.99', 'CI,CN', '190');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1145', '6011227175459', 'Ignat', 'Lucia', '0772221229', 'Str Cort nr 2 Bloc Y4 ap 12\n', '9.00', 'CI,CN', '190');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1146', '6011222179313', 'Prodan', 'Maia', '0776987221', 'Str Palmier nr 3 Bloc L4 ap 12\n', '9.88', 'CI,CN,FM', '200');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1147', '5011222179522', 'Anita', 'Andrei', '0772112772', 'Str Pui nr 3 Bloc L4 ap 55\n', '8.00', 'CI,CN,AF,DE', '200');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1148', '5011222179215', 'Ritu', 'Florin', '0778221229', 'Str Busuioc nr 7 BlocL O4 ap 52\n', '9.00', 'CI,CN', '200');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1149', '6011222175420', 'Palade', 'Ernesta', '0755443221', 'Str Pufului nr 3 Bloc L4 ap 12\n', '8.00', 'CI,CN', '200');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1150', '5011222179442', 'Nelu', 'Cortea', '0778223445', 'Str Pantof nr 43 Bloc L8 ap 12\n', '9.20', 'CI,CN', '200');
+
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1151', '6011222179786', 'Paliu', 'Maria', '0733445667', 'Str Bis nr 39 Bloc N4 ap 22\n', '9.88', 'CI,CN,FM', '210');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1152', '6010420176351', 'Marta', 'Teona', '0772421998', 'Str Busuioc nr 3 Bloc L4 ap 76\n', '9.00', 'CI,CN,AF,DE', '210');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1153', '5010420177706', 'Timis', 'Paul', '0786775665', 'Str Busuioc nr 3 Bloc L4 ap 77\n', '9.22', 'CI,CN', '210');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1154', '5010422178666', 'Albu', 'Anto', '0722114222', 'Str Busuioc nr 3 Bloc L4 ap 88\n', '8.88', 'CI,CN', '210');
+INSERT INTO `bd`.`elev` (`nr_matricol`, `CNP`, `nume`, `prenume`, `nr_telefon`, `adresa`, `medie`, `acte_adi`, `codclasa`) VALUES ('1155', '5010424175623', 'Negru', 'Dan', '0772772882', 'Str Revelion nr31  Bloc A4 ap 1\n', '9.42', 'CI,CN', '210');
+
+//TABELA TIP_BURSA
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('1', 'CI,CN', '0', '0', 'NEBURSIER');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('2', 'CI,CN,FM', '9.50', '600', 'MERIT');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('3', 'CI,CN,DIPOLIMP', '9', '1000', 'OLIMPIC');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('4', 'CI,CN,AD', '5.00', '400', 'ORFAN');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('5', 'CI,CN,AF,DE', '5.00', '350', 'RURAL');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('6', 'CI,CN,ANAF', '5.00', '450', 'SDIF');
+INSERT INTO `bd`.`tip_bursa` (`codbur`, `acte_br`, `medie`, `valoare`, `nume`) VALUES ('7', 'CI,CN,ACH', '5', '300', 'HANDICAP');
+
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '6' WHERE (`codbur` = '2');
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '6' WHERE (`codbur` = '3');
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '12' WHERE (`codbur` = '4');
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '12' WHERE (`codbur` = '5');
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '12' WHERE (`codbur` = '6');
+UPDATE `bd`.`tip_bursa` SET `durata_luni` = '12' WHERE (`codbur` = '7');
+
+//insert bursier
+insert into bursieri(codbur,nr_matricol) 
+select tip_bursa.codbur,elev.nr_matricol 
+from tip_bursa,elev where tip_bursa.acte_br=elev.acte_adi 
+and tip_bursa.medie<=elev.medie;
+select * from bursieri;
