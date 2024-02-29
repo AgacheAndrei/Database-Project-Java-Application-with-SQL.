@@ -1,4 +1,4 @@
-# Database Project -- Java Application with SQL
+# Spring Boot Website
 ## Project for univeristy
 
 ## The goal of the app
@@ -83,7 +83,7 @@ Profiles:
 
 ## Code solution
 <pre>
-Application with a Java Swing interface for high school student management, data retrieval done in Java, SQL database.
+An website with Spring Boot for the backend, frontend created with Thymeleaf, HTML, CSS, Bootstrap and for the stoarege a SQL database.
 Features:
 - Adding new students to the system as scholarship or non-scholarship students.
 - Modifying student data.
@@ -122,18 +122,15 @@ Roles:
 It includes essential features for data management, reporting, and user interaction.
 </pre>
 ### Programing languages and technology used
-<img align="left" width="40px" style="padding-right:10px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" /> 
+<img align="left" width="40px" style="padding-right:10px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Spring_Boot.svg/768px-Spring_Boot.svg.png" /> 
+<img align="left" width="40px" style="padding-right:10px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" /> 
+<img align="left" width="40px" style="padding-right:10px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" /> 
 <img align="left" width="40px" style="padding-right:10px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" /> 
 <img align="left" width="40px" style="padding-right:10px" src="https://github.com/AgacheAndrei/Database-Project-Java-Application-with-SQL./assets/36128809/a70ec2cd-1130-4719-ab97-0f7d0a67b843" /> 
 
 <br>
 <br>
 
-<pre>
-I used the JConnector driver to establish the connection between the Java program and the database.
-  ->For saving files in .xlsx format, I used POI, XMLBEANS, LOG4J.
-  ->For creating animations, I used TIMINGFRAMEWORK.
-</pre>
 <br>
 
 ### Data base - concept
