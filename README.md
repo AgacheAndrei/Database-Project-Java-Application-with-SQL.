@@ -128,6 +128,7 @@ It includes essential features for data management, reporting, and user interact
 <img align="left" width="40px" style="padding-right:10px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" /> 
 <img align="left" width="40px" style="padding-right:10px" src="https://github.com/AgacheAndrei/Database-Project-Java-Application-with-SQL./assets/36128809/a70ec2cd-1130-4719-ab97-0f7d0a67b843" /> 
 
+<br>
 ### Admin -> Email: andrei@cuza.com, Password: admin
 ### Secretary -> Email: ana@cuza.com, Password: sec
 <br>
